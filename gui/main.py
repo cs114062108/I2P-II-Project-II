@@ -250,6 +250,8 @@ class GameApp(EngineManagerMixin, PromotionMixin, DialogsMixin):
                         f"update={1000*(t2-t1):.0f} "
                         f"draw={1000*(t3-t2):.0f})"
                     )
+        except KeyboardInterrupt:
+            log.warning("UUUUUAAAAAAAAAHHHHHHH, don't kill me LIKE THAT!!!!")
         finally:
             self._shutdown_uci_engines()
             pygame.quit()
@@ -709,11 +711,14 @@ class GameApp(EngineManagerMixin, PromotionMixin, DialogsMixin):
 
 def main():
     parser = argparse.ArgumentParser(description="UBGI GUI")
+    title = "minichess"
+    ahhh_title = "minichess soooo hard aaaaaaaaaaaaaahhhhhhhhhhhhhhhhhh"
+    default = ahhh_title
     parser.add_argument(
         "--game",
-        default="minichess",
-        choices=["minichess"],
-        help="Game type: minichess (default: minichess)",
+        default=default,
+        choices=[title, ahhh_title],
+        help=f"Game type: {title} (default: {default})",
     )
     args = parser.parse_args()
 

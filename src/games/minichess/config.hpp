@@ -12,6 +12,8 @@
 #define MAX_STEP 100
 #define USE_BITBOARD
 
+enum Piece {EMPTY, PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING};
+
 /* MVV-LVA piece values for move ordering (indexed by piece type) */
 static const int PIECE_VALUES[] = {
     0,   /* EMPTY=0 */
