@@ -31,14 +31,14 @@ def _draw_rounded_rect(surface, rect, color, radius=10):
 
 
 class Button:
-    def __init__(self, x, y, width, height, text, font):
+    def __init__(self, x: int, y: int, width: int, height: int, text: str, font: pygame.Font):
         self.rect = pygame.Rect(x, y, width, height)
         self.text = text
         self.font = font
         self.enabled = True
         self.active = False  # "on" state — different color
 
-    def draw(self, surface, mouse_pos):
+    def draw(self, surface: pygame.Surface, mouse_pos: tuple[int, int]):
         if not self.enabled:
             bg = (45, 45, 50)
             fg = (90, 90, 90)
@@ -81,7 +81,7 @@ class SidePanel:
     _SCORE_PLOT_MAX_CP = None  # set from cfg at draw time
     _HISTORY_LINE_H = 20
 
-    def __init__(self, surface):
+    def __init__(self, surface: pygame.Surface):
         self.surface = surface
 
         self.font_title = _make_font(cfg.FONT_SIZE_STATUS, bold=True)
@@ -135,6 +135,17 @@ class SidePanel:
             btn3_w,
             self._BTN_HEIGHT,
             "Reset",
+            self.font_btn,
+        )
+        
+        # Ha row
+        btn_y3 = btn_y1 - self._BTN_HEIGHT - self._BTN_GAP*2
+        self.btn_useless = Button(
+            bx + btn3_w + self._BTN_GAP,
+            btn_y3,
+            btn3_w,
+            self._BTN_HEIGHT,
+            "Useless",
             self.font_btn,
         )
 
@@ -299,6 +310,9 @@ class SidePanel:
         self.btn_analyze.draw(self.surface, mouse_pos)
         self.btn_undo.draw(self.surface, mouse_pos)
         self.btn_settings.draw(self.surface, mouse_pos)
+        
+        # Ha row:
+        self.btn_useless.draw(self.surface, mouse_pos)
 
     # ==================================================================
     # Bottom panel (eval bar | score plot | move table)

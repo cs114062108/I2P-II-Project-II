@@ -12,6 +12,7 @@ except ImportError:
 
 
 class DialogsMixin:
+    _tk_root: tk.Tk
 
     def open_new_game_dialog(self):
         """Player setup dialog → starts a new game on OK."""

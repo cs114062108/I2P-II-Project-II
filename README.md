@@ -33,6 +33,14 @@ stdin/stdout, and ships with Python GUI and CLI front-ends.
 
 ## Build & run
 
+For `gui`/`cli`:
+```bash
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install pygame-ce
+python gui/main.py
+```
+
 Requires `g++` with C++20 (`--std=c++2a`); compiles with `-O3 -march=native`.
 
 ```bash

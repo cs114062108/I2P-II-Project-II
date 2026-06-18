@@ -30,6 +30,9 @@ except ImportError:
 
 class GameApp(EngineManagerMixin, PromotionMixin, DialogsMixin):
     """Main application class."""
+    _tk_root: tk.Tk
+    screen: pygame.Surface
+    clock: pygame.time.Clock
 
     def __init__(self, game_name="minichess"):
         # Configure board size BEFORE creating the window
@@ -44,6 +47,9 @@ class GameApp(EngineManagerMixin, PromotionMixin, DialogsMixin):
 
         pygame.init()
         pygame.display.set_caption(game_name.capitalize())
+        
+        window_icon = pygame.image.load("chess-black-piece.png")
+        pygame.display.set_icon(window_icon)
 
         self.screen = pygame.display.set_mode((_cfg.WINDOW_W, _cfg.WINDOW_H))
         self.clock = pygame.time.Clock()
@@ -712,7 +718,7 @@ class GameApp(EngineManagerMixin, PromotionMixin, DialogsMixin):
 def main():
     parser = argparse.ArgumentParser(description="UBGI GUI")
     title = "minichess"
-    ahhh_title = "minichess soooo hard aaaaaaaaaaaaaahhhhhhhhhhhhhhhhhh"
+    ahhh_title = "minichess soooo hard aaaaahhhhh"
     default = ahhh_title
     parser.add_argument(
         "--game",

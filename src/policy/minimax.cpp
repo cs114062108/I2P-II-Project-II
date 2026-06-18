@@ -106,7 +106,7 @@ SearchResult MiniMax::search(
     SearchResult result;
     result.depth = depth;
 
-    if(!state->legal_actions.size()){
+    if (!state->legal_actions.size()) {
         state->get_legal_actions();
     }
 
