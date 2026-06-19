@@ -1,12 +1,12 @@
 #include <utility>
 #include <algorithm>
 #include "state.hpp"
-#include "alphabeta.hpp"
+#include "pvs.hpp"
 
 /*============================================================
- * Alpha-Beta — Recursive Evaluation Helper (eval_ctx)
+ * PVS — Recursive Evaluation Helper (eval_ctx)
  *
- * Negamax search with Alpha-Beta pruning. Caller manages memory.
+ * Negamax with Principal Variation Search (PVS) / NegaScout.
  *============================================================*/
 static int eval_ctx(
     State *state,
@@ -16,7 +16,7 @@ static int eval_ctx(
     GameHistory& history,
     int ply,
     SearchContext& ctx,
-    const ABParams& params
+    const PVSParams& params
 ) {
     ctx.nodes++;
     if (ply > ctx.seldepth) {
@@ -26,29 +26,27 @@ static int eval_ctx(
         return 0;
     }
 
-    /* === Lazy move generation (sets game_state) === */
+    /* === Lazy move generation === */
     if (state->legal_actions.empty() && state->game_state == UNKNOWN) {
         state->get_legal_actions();
     }
 
     /* === Terminal / leaf checks === */
     if (state->game_state == WIN) {
-        // Prefer shorter paths to win by subtracting ply
-        return P_MAX - ply;
+        return P_MAX - ply; // Prefer shorter paths to victory
     }
 
     if (state->game_state == DRAW) {
         return 0;
     }
 
-    /* === Repetition check (game-specific) === */
+    /* === Repetition check === */
     int rep_score;
     if (state->check_repetition(history, rep_score)) {
         return rep_score;
     }
     history.push(state->hash());
 
-    // Evaluate the leaf node when maximum search depth is reached
     if (depth <= 0) {
         int score = state->evaluate(
             params.use_kp_eval, params.use_eval_mobility, &history
@@ -57,38 +55,53 @@ static int eval_ctx(
         return score;
     }
 
-    /* === Negamax Alpha-Beta search loop === */
-    int best_score = M_MAX; // Initialize with the lowest possible score boundary
+    /* === PVS Negamax loop === */
+    int best_score = M_MAX;
+    bool is_first_move = true;
 
     for (Move& action : state->legal_actions) {
-        // Create the child state after applying the current action
         State *next = static_cast<State*>(state->next_state(action));
         bool same = next->same_player_as_parent();
 
         int score;
-        if (same) {
-            // Same player moves (do not negate score or flip alpha/beta window)
-            score = eval_ctx(next, depth - 1, alpha, beta, history, ply + 1, ctx, params);
+        if (is_first_move) {
+            /* === First move: Search with full window === */
+            if (same) {
+                score = eval_ctx(next, depth - 1, alpha, beta, history, ply + 1, ctx, params);
+            } else {
+                score = -eval_ctx(next, depth - 1, -beta, -alpha, history, ply + 1, ctx, params);
+            }
+            is_first_move = false;
         } else {
-            // Standard Negamax alternation (negate score and flip alpha/beta window)
-            score = -eval_ctx(next, depth - 1, -beta, -alpha, history, ply + 1, ctx, params);
+            /* === Subsequent moves: Search with narrow/null window [alpha, alpha + 1] === */
+            if (same) {
+                score = eval_ctx(next, depth - 1, alpha, alpha + 1, history, ply + 1, ctx, params);
+                
+                // Fail-high: If the null-window search yields a score better than alpha, re-search with full window
+                if (score > alpha && score < beta) {
+                    score = eval_ctx(next, depth - 1, score, beta, history, ply + 1, ctx, params);
+                }
+            } else {
+                score = -eval_ctx(next, depth - 1, -alpha - 1, -alpha, history, ply + 1, ctx, params);
+                
+                // Fail-high: Re-search with full window from the perspective of the current player
+                if (score > alpha && score < beta) {
+                    score = -eval_ctx(next, depth - 1, -beta, -score, history, ply + 1, ctx, params);
+                }
+            }
         }
 
-        // Free dynamically allocated state memory to prevent leaks
         delete next;
 
-        // Track the best score for this state
         if (score > best_score) {
             best_score = score;
         }
 
-        // Alpha cutoff / update: alpha represents the lower bound of what we can guarantee
         if (best_score > alpha) {
             alpha = best_score;
         }
 
-        // Beta pruning: If our best score is greater than or equal to beta (the upper bound 
-        // the opponent allows us to get), the opponent will never allow this branch.
+        // Alpha-Beta Pruning boundary check
         if (alpha >= beta) {
             break;
         }
@@ -99,18 +112,16 @@ static int eval_ctx(
 }
 
 /*============================================================
- * Alpha-Beta — Root Search Entrypoint (search)
- *
- * Iterate legal moves, call eval_ctx with alpha-beta bounds, and return the best move.
+ * PVS — Root Search Entrypoint (search)
  *============================================================*/
-SearchResult AlphaBeta::search(
+SearchResult PVS::search(
     State *state,
     int depth,
     GameHistory& history,
     SearchContext& ctx
 ) {
     ctx.reset();
-    ABParams p = ABParams::from_map(ctx.params);
+    PVSParams p = PVSParams::from_map(ctx.params);
     SearchResult result;
     result.depth = depth;
 
@@ -118,41 +129,53 @@ SearchResult AlphaBeta::search(
         state->get_legal_actions();
     }
 
-    // Initialize root alpha/beta window bounds
     int alpha = M_MAX - 10;
     int beta = P_MAX + 10;
     int best_score = M_MAX - 10;
     
     int move_index = 0;
     int total_moves = (int)state->legal_actions.size();
+    bool is_first_move = true;
 
     for (auto& action : state->legal_actions) {
-        // Generate the child state for the root move
         State* next = static_cast<State*>(state->next_state(action));
         bool same = next->same_player_as_parent();
         
         int score;
-        if (same) {
-            score = eval_ctx(next, depth - 1, alpha, beta, history, 1, ctx, p);
+        if (is_first_move) {
+            /* === Root First move: Full window search === */
+            if (same) {
+                score = eval_ctx(next, depth - 1, alpha, beta, history, 1, ctx, p);
+            } else {
+                score = -eval_ctx(next, depth - 1, -beta, -alpha, history, 1, ctx, p);
+            }
+            is_first_move = false;
         } else {
-            score = -eval_ctx(next, depth - 1, -beta, -alpha, history, 1, ctx, p);
+            /* === Root Subsequent moves: Null window search first === */
+            if (same) {
+                score = eval_ctx(next, depth - 1, alpha, alpha + 1, history, 1, ctx, p);
+                if (score > alpha && score < beta) {
+                    score = eval_ctx(next, depth - 1, score, beta, history, 1, ctx, p);
+                }
+            } else {
+                score = -eval_ctx(next, depth - 1, -alpha - 1, -alpha, history, 1, ctx, p);
+                if (score > alpha && score < beta) {
+                    score = -eval_ctx(next, depth - 1, -beta, -score, history, 1, ctx, p);
+                }
+            }
         }
 
-        // Free child state memory after search
         delete next;
 
-        // Keep this move if it yields a better evaluation score
         if (score > best_score) {
             best_score = score;
             result.best_move = action;
 
-            // Optional partial updates for engine logs / UI integration
             if (p.report_partial && ctx.on_root_update) {
                ctx.on_root_update({result.best_move, best_score, depth, move_index + 1, total_moves});
             }
         }
 
-        // Update the root-level alpha bound
         if (best_score > alpha) {
             alpha = best_score;
         }
@@ -165,9 +188,9 @@ SearchResult AlphaBeta::search(
 }
 
 /*============================================================
- * AlphaBeta — default_params / param_defs
+ * PVS — default_params / param_defs
  *============================================================*/
-ParamMap AlphaBeta::default_params() {
+ParamMap PVS::default_params() {
     return {
         {"UseKPEval", "true"},
         {"UseEvalMobility", "true"},
@@ -175,7 +198,7 @@ ParamMap AlphaBeta::default_params() {
     };
 }
 
-std::vector<ParamDef> AlphaBeta::param_defs() {
+std::vector<ParamDef> PVS::param_defs() {
     return {
         {"UseKPEval", ParamDef::CHECK, "true"},
         {"UseEvalMobility", ParamDef::CHECK, "true"},

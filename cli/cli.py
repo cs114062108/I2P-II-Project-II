@@ -45,7 +45,7 @@ def _init_game(game_name: str, board_size: int | None = None) -> None:
     _game_ctx.update(_minichess_ctx())
 
 
-ALGO_CHOICES = ["minimax", "random"]
+ALGO_CHOICES = ["minimax", "random", "alphabeta", "pvs", "pua"]
 
 # ---------------------------------------------------------------------------
 # Board display (game-specific)
@@ -634,6 +634,10 @@ def run_tournament(
                 f"  Score after {total_played} game(s): "
                 f"Engine1({algo1}) +{engine1_wins} -{engine2_wins} ={draws}"
             )
+            print(
+                f"  Score after {total_played} game(s): "
+                f"Engine2({algo2}) +{engine2_wins} -{engine1_wins} ={draws}"
+            )
 
     except KeyboardInterrupt:
         print("\n\nTournament interrupted!")
@@ -651,7 +655,9 @@ def run_tournament(
     print(f"  White wins: {white_wins}  Black wins: {black_wins}  Draws: {color_draws}")
     if total > 0:
         e1_score = engine1_wins + draws * 0.5
-        print(f"  Engine1 score: {e1_score}/{total} ({e1_score / total * 100:.1f}%)")
+        print(f"  Engine1 ({algo1}) score: {e1_score}/{total} ({e1_score / total * 100:.1f}%)")
+        e2_score = engine2_wins + draws * 0.5
+        print(f"  Engine2 ({algo2}) score: {e2_score}/{total} ({e2_score / total * 100:.1f}%)")
     print("=" * 50)
 
 

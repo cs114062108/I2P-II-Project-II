@@ -311,9 +311,9 @@ void State::get_legal_actions_naive(){
         for(int j=0; j<BOARD_W; j+=1){
             if((now_piece=self_board[i][j])){
                 switch(now_piece){
-                    case 1: //pawn
+                    case 1: // pawn
                         if(this->player && i<BOARD_H-1){
-                            //black
+                            // black
                             if(!oppn_board[i+1][j] && !self_board[i+1][j]){
                                 all_actions.push_back(Move(Point(i, j), Point(i+1, j)));
                             }
@@ -357,14 +357,14 @@ void State::get_legal_actions_naive(){
                         }
                         break;
 
-                    case 2: //rook
-                    case 4: //bishop
-                    case 5: //queen
+                    case 2: // rook
+                    case 4: // bishop
+                    case 5: // queen
                         int st, end;
                         switch(now_piece){
-                            case 2: st=0; end=4; break; //rook
-                            case 4: st=4; end=8; break; //bishop
-                            case 5: st=0; end=8; break; //queen
+                            case 2: st=0; end=4; break; // rook
+                            case 4: st=4; end=8; break; // bishop
+                            case 5: st=0; end=8; break; // queen
                             default: st=0; end=-1;
                         }
                         for(int part=st; part<end; part+=1){
@@ -396,7 +396,7 @@ void State::get_legal_actions_naive(){
                         }
                         break;
 
-                    case 3: //knight
+                    case 3: // knight
                         // [ Hackathon TODO 2-2 ]
                         // complete knight's movement, you can refer to other pieces' movement
                         for (auto move: move_table_knight) {

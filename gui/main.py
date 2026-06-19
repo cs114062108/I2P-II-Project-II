@@ -15,6 +15,7 @@ try:
     from gui.dialogs import DialogsMixin
     from gui.game_registry import get_game_module, configure_board_size
     from gui.logger import log
+    import gui.json_logger  # Custom game json logger
     import gui.config as _cfg
 except ImportError:
     from board_renderer import BoardRenderer
@@ -25,6 +26,7 @@ except ImportError:
     from dialogs import DialogsMixin
     from game_registry import get_game_module, configure_board_size
     from logger import log
+    import json_logger  # Custom game json logger
     import config as _cfg
 
 
@@ -117,6 +119,7 @@ class GameApp(EngineManagerMixin, PromotionMixin, DialogsMixin):
         self.move_history = []
         self.score_history = []
 
+        self._game_result_val = None
         self.game_result = None
 
         # AI state
@@ -146,6 +149,28 @@ class GameApp(EngineManagerMixin, PromotionMixin, DialogsMixin):
 
         self._running = True
 
+    # ------------------------------------------------------------------
+    # Game result property -- Auto-Save Game Result Hook
+    # ------------------------------------------------------------------
+    # === Auto-Save Game Result Hook ===
+    @property
+    def game_result(self):
+        """Getter for the game result."""
+        return getattr(self, "_game_result_val", None)
+
+    @game_result.setter
+    def game_result(self, value):
+        """Setter for the game result. Triggers auto-save when a match ends."""
+        old_val = getattr(self, "_game_result_val", None)
+        self._game_result_val = value
+        
+        # Detect transition from None (active game) to a non-None value (game finished)
+        if value is not None and old_val is None:
+            if json_logger is not None:
+                json_logger.save_game_to_json(self, value)
+            else:
+                log.warning("[Result save] json_logger module not found. Game record was not saved.")
+    
     # ------------------------------------------------------------------
     # Mode property -- derived from engine selections
     # ------------------------------------------------------------------
@@ -697,7 +722,7 @@ class GameApp(EngineManagerMixin, PromotionMixin, DialogsMixin):
         self._promotion_dialog = None
         self.move_history = []
         self.score_history = []
-        self.game_result = None
+        self._game_result_val = None
         self.ai_thinking = False
         self.ai_result = {"move": None, "depth": 0, "ready": False}
         self.ai_depth = None
