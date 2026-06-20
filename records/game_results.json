@@ -515,6 +515,7 @@
     {
         "timestamp": "2026-06-20 17:42:20",
         "game_result": "Black checkmate",
+        "winner": "minichess-ubgi.exe",
         "players": {
             "white": {
                 "type": "AI",
@@ -534,6 +535,7 @@
     {
         "timestamp": "2026-06-20 17:46:52",
         "game_result": "White checkmate",
+        "winner": "minichess-ubgi.exe",
         "players": {
             "white": {
                 "type": "AI",
@@ -553,6 +555,7 @@
     {
         "timestamp": "2026-06-20 17:50:28",
         "game_result": "White wins",
+        "winner": "minichess-ubgi.exe",
         "players": {
             "white": {
                 "type": "AI",
@@ -572,6 +575,7 @@
     {
         "timestamp": "2026-06-20 17:52:32",
         "game_result": "Black checkmate",
+        "winner": "minichess-ubgi.exe",
         "players": {
             "white": {
                 "type": "AI",
@@ -591,6 +595,7 @@
     {
         "timestamp": "2026-06-20 18:04:09",
         "game_result": "Black checkmate",
+        "winner": "boss-ubgi.exe",
         "players": {
             "white": {
                 "type": "AI",
@@ -610,6 +615,7 @@
     {
         "timestamp": "2026-06-20 18:05:55",
         "game_result": "White wins",
+        "winner": "boss-ubgi.exe",
         "players": {
             "white": {
                 "type": "AI",
@@ -629,6 +635,7 @@
     {
         "timestamp": "2026-06-20 18:08:15",
         "game_result": "Black wins",
+        "winner": "boss-ubgi.exe",
         "players": {
             "white": {
                 "type": "AI",
