@@ -122,11 +122,15 @@ def save_game_to_json(app, result_str: str) -> None:
     moves_list = []
     for m in raw_moves:
         moves_list.append(str(m))
-        
+    
+    result = result_str.replace("p0_", "White ").replace("p1_", "Black ")
+    winner = white_info["name"] if "White" in result else black_info["name"]
+            
     # Construct the game log record
     record: dict[str, object] = {
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "game_result": result_str.replace("p0_", "White ").replace("p1_", "Black "),
+        "game_result": result,
+        "winner": winner,
         "players": {
             "white": white_info,
             "black": black_info

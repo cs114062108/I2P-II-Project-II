@@ -4,6 +4,95 @@
 #include "pvs.hpp"
 
 /*============================================================
+ * Quiescence Search (quiescence)
+ *
+ * Search only capture moves to reach a stable state, preventing the Horizon Effect.
+ *============================================================*/
+static int quiescence(
+    State *state,
+    int alpha,
+    int beta,
+    GameHistory& history,
+    int ply,
+    SearchContext& ctx,
+    const PVSParams& params
+) {
+    ctx.nodes++;
+    // Active check: immediately abort if time is up
+    if (ctx.stop) {
+        return 0;
+    }
+
+    // 1. Establish the "Standing Pat" score as a baseline.
+    // Since a player can always choose not to capture anything, this is our lower bound.
+    int stand_pat = state->evaluate(params.use_kp_eval, params.use_eval_mobility, &history);
+    
+    // Beta cutoff
+    if (stand_pat >= beta) {
+        return stand_pat;
+    }
+    
+    // Update alpha bound
+    if (stand_pat > alpha) {
+        alpha = stand_pat;
+    }
+
+    // Prevent QS from searching too deep (prevents timeouts/memory explosion)
+    if (ply > 8) { 
+        return stand_pat;
+    }
+
+    // Generate moves if not already available
+    if (state->legal_actions.empty() && state->game_state == UNKNOWN) {
+        state->get_legal_actions();
+    }
+
+    auto oppn_board = state->board.board[1 - state->player];
+
+    // Filter only capture moves for QS
+    std::vector<Move> captures;
+    for (const auto& action : state->legal_actions) {
+        int dest_r = action.second.first;
+        int dest_c = action.second.second;
+        if (oppn_board[dest_r][dest_c] != 0) {
+            captures.push_back(action);
+        }
+    }
+
+    // Order capture moves using MVV-LVA defined in State class
+    std::vector<Move> ordered_captures = state->order_moves(captures);
+
+    // 2. Iterate and evaluate only noisy moves (captures)
+    for (Move& action : ordered_captures) {
+        // Active check inside the loop to abort quickly during heavy captures
+        if (ctx.stop) {
+            return 0;
+        }
+
+        State *next = static_cast<State*>(state->next_state(action));
+        bool same = next->same_player_as_parent();
+
+        int score;
+        if (same) {
+            score = quiescence(next, alpha, beta, history, ply + 1, ctx, params);
+        } else {
+            score = -quiescence(next, -beta, -alpha, history, ply + 1, ctx, params);
+        }
+
+        delete next;
+
+        if (score >= beta) {
+            return score; // Beta cutoff
+        }
+        if (score > alpha) {
+            alpha = score;
+        }
+    }
+
+    return alpha;
+}
+
+/*============================================================
  * PVS — Recursive Evaluation Helper (eval_ctx)
  *
  * Negamax with Principal Variation Search (PVS) / NegaScout.
@@ -22,10 +111,11 @@ static int eval_ctx(
     if (ply > ctx.seldepth) {
         ctx.seldepth = ply;
     }
+    // Active check: immediately abort if time is up
     if (ctx.stop) {
         return 0;
     }
-
+    
     /* === Lazy move generation === */
     if (state->legal_actions.empty() && state->game_state == UNKNOWN) {
         state->get_legal_actions();
@@ -47,10 +137,10 @@ static int eval_ctx(
     }
     history.push(state->hash());
 
+    // Evaluate the leaf node using Quiescence Search
     if (depth <= 0) {
-        int score = state->evaluate(
-            params.use_kp_eval, params.use_eval_mobility, &history
-        ); 
+        //int score = state->evaluate(params.use_kp_eval, params.use_eval_mobility, &history);
+        int score = quiescence(state, alpha, beta, history, ply, ctx, params);
         history.pop(state->hash());
         return score;
     }
@@ -59,7 +149,16 @@ static int eval_ctx(
     int best_score = M_MAX;
     bool is_first_move = true;
 
-    for (Move& action : state->legal_actions) {
+    // Apply high-performance Move Ordering using State's member function
+    std::vector<Move> ordered_moves = state->order_moves(state->legal_actions);
+
+    for (Move& action: ordered_moves) {
+        // Active check inside the loop to prevent continuing evaluation on timeout
+        if (ctx.stop) {
+            history.pop(state->hash());
+            return 0;
+        }
+
         State *next = static_cast<State*>(state->next_state(action));
         bool same = next->same_player_as_parent();
 
@@ -137,7 +236,15 @@ SearchResult PVS::search(
     int total_moves = (int)state->legal_actions.size();
     bool is_first_move = true;
 
-    for (auto& action : state->legal_actions) {
+    // Sort root moves using State's member function to start with the most promising branch
+    std::vector<Move> ordered_moves = state->order_moves(state->legal_actions);
+
+    for (Move& action: ordered_moves) {
+        // If the stop flag was set, immediately abort root loop and return the best move we've finished evaluating
+        if (ctx.stop) {
+            break;
+        }
+
         State* next = static_cast<State*>(state->next_state(action));
         bool same = next->same_player_as_parent();
         
@@ -166,6 +273,12 @@ SearchResult PVS::search(
         }
 
         delete next;
+
+        // CRITICAL PROTECTION: If search was aborted during the evaluation, 
+        // DO NOT use the returned score to overwrite our best move, as the score is incomplete/corrupted.
+        if (ctx.stop) {
+            break;
+        }
 
         if (score > best_score) {
             best_score = score;

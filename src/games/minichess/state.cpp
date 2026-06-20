@@ -2,6 +2,7 @@
 #include <sstream>
 #include <cstdint>
 #include <cstdlib>
+#include <algorithm>
 
 #include "./state.hpp"
 #include "config.hpp"
@@ -176,7 +177,56 @@ int State::evaluate(
     return self_score - oppn_score + bonus;
 }
 
+/*============================================================
+ * Move Ordering Implementation (MVV-LVA)
+ *============================================================*/
 
+// 1: Pawn, 2: Rook, 3: Knight, 4: Bishop, 5: Queen, 6: King
+static const int piece_vals[7] = {0, 100, 500, 300, 320, 900, 20000};
+
+struct ScoredMove {
+    Move move;
+    int score;
+    bool operator<(const ScoredMove& other) const {
+        return score > other.score; // Sort in descending order
+    }
+};
+
+std::vector<Move> State::order_moves(const std::vector<Move>& moves) const {
+    std::vector<ScoredMove> scored_moves;
+    scored_moves.reserve(moves.size());
+
+    int self_player = this->player;
+    int oppn_player = 1 - self_player;
+
+    for (const auto& move : moves) {
+        int fr = move.first.first, fc = move.first.second;
+        int tr = move.second.first, tc = move.second.second;
+
+        int attacker = this->piece_at(self_player, fr, fc);
+        int victim = this->piece_at(oppn_player, tr, tc);
+
+        int score = 0;
+        if (victim > 0) {
+            // MVV-LVA: Most Valuable Victim, Least Valuable Attacker
+            score = 100000 + (piece_vals[victim] * 10 - piece_vals[attacker]);
+        } else {
+            // Quiet moves: slight bias towards pushing pieces forward or center control
+            score = (self_player == 0) ? (BOARD_H - 1 - tr) : tr; 
+        }
+
+        scored_moves.push_back({move, score});
+    }
+
+    std::sort(scored_moves.begin(), scored_moves.end());
+
+    std::vector<Move> ordered;
+    ordered.reserve(moves.size());
+    for (const auto& sm : scored_moves) {
+        ordered.push_back(sm.move);
+    }
+    return ordered;
+}
 
 /*============================================================
  * Zobrist hash for transposition table

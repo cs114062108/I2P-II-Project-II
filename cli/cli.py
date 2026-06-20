@@ -6,6 +6,8 @@ import subprocess
 import sys
 import time
 
+from pathlib import Path
+
 from cli.games.minichess import get_context as _minichess_ctx
 
 if sys.platform == "win32":
@@ -245,7 +247,7 @@ def get_engine_move(
 
     # Debug: dump raw output if no move found
     if bestmove is None:
-        print(f"  [DEBUG] No bestmove found. stdout lines={len(lines)}")
+        print_log(f"  [DEBUG] No bestmove found. stdout lines={len(lines)}")
         for i, l in enumerate(lines[-10:]):
             print(f"  [DEBUG]   {i}: {l.strip()}")
 
@@ -541,6 +543,28 @@ def run_game(
         if verbose and has_state:
             print_board(state)
 
+"""BY ME"""
+def get_persistent_path(relative_path: str) -> Path:
+    """ Get path to the actual folder where the EXE is (Read-Write) """
+    if getattr(sys, 'frozen', False):
+        # Path to the folder containing the .exe
+        base_path = Path(sys.executable).parent
+    else:
+        # Path to the folder containing the script
+        base_path = Path(os.path.abspath("."))
+    return base_path / relative_path
+
+SAVES_DIR = get_persistent_path("records")
+file_path = SAVES_DIR / "cli_results.txt"
+
+def print_log(*values: object,
+              sep: str | None = " ",
+              end: str | None = "\n",
+              flush: bool = False,
+              to_stdout: bool = True):
+    with open(file_path, "a") as f:
+        if to_stdout: print(*values, sep=sep, end=end, flush=flush)
+        print(*values, sep=sep, end=end, file=f)
 
 def run_tournament(
     engine1_path: str,
@@ -580,7 +604,7 @@ def run_tournament(
             if not verbose:
                 e1_color = "White" if engine1_is_white else "Black"
                 e2_color = "Black" if engine1_is_white else "White"
-                print(
+                print_log(
                     f"Game {game_idx + 1}/{num_games}: "
                     f"Engine1({algo1})={e1_color} vs Engine2({algo2})={e2_color}",
                     end="",
@@ -627,14 +651,14 @@ def run_tournament(
 
             if not verbose:
                 winner_str = {"white": "1-0", "black": "0-1", "draw": "1/2"}[result]
-                print(f" {winner_str}")
+                print_log(f" {winner_str}")
 
             total_played = game_idx + 1
-            print(
+            print_log(
                 f"  Score after {total_played} game(s): "
                 f"Engine1({algo1}) +{engine1_wins} -{engine2_wins} ={draws}"
             )
-            print(
+            print_log(
                 f"  Score after {total_played} game(s): "
                 f"Engine2({algo2}) +{engine2_wins} -{engine1_wins} ={draws}"
             )
@@ -644,21 +668,25 @@ def run_tournament(
 
     finally:
         pass  # engines are killed per-move, nothing to clean up
-
+    
+    engine1_name = engine1_path.removeprefix("build/").removesuffix(".exe")
+    engine2_name = engine2_path.removeprefix("build/").removesuffix(".exe")
+    
     total = engine1_wins + engine2_wins + draws
-    print()
-    print("=" * 50)
-    print(f"  Tournament Results ({total} games)")
-    print("=" * 50)
-    print(f"  Engine1 ({algo1}): +{engine1_wins} -{engine2_wins} ={draws}")
-    print(f"  Engine2 ({algo2}): +{engine2_wins} -{engine1_wins} ={draws}")
-    print(f"  White wins: {white_wins}  Black wins: {black_wins}  Draws: {color_draws}")
+    #print_log()
+    print_log("=" * 50)
+    print_log(f"  Tournament Results ({total} games)")
+    print_log("=" * 50)
+    print_log(f"  Engine1 {engine1_name} ({algo1}): +{engine1_wins} -{engine2_wins} ={draws}")
+    print_log(f"  Engine2 {engine2_name} ({algo2}): +{engine2_wins} -{engine1_wins} ={draws}")
+    print_log(f"  White wins: {white_wins}  Black wins: {black_wins}  Draws: {color_draws}")
     if total > 0:
         e1_score = engine1_wins + draws * 0.5
-        print(f"  Engine1 ({algo1}) score: {e1_score}/{total} ({e1_score / total * 100:.1f}%)")
+        print_log(f"  Engine1 {engine1_name} ({algo1}) score: {e1_score}/{total} ({e1_score / total * 100:.1f}%)")
         e2_score = engine2_wins + draws * 0.5
-        print(f"  Engine2 ({algo2}) score: {e2_score}/{total} ({e2_score / total * 100:.1f}%)")
-    print("=" * 50)
+        print_log(f"  Engine2 {engine2_name} ({algo2}) score: {e2_score}/{total} ({e2_score / total * 100:.1f}%)")
+    print_log("=" * 50)
+    print_log()
 
 
 def main() -> None:

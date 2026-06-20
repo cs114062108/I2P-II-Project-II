@@ -321,5 +321,408 @@
             }
         },
         "moves_count": 100
+    },
+    {
+        "timestamp": "2026-06-20 11:20:53",
+        "game_result": "Black wins",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 79
+    },
+    {
+        "timestamp": "2026-06-20 17:29:18",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minimax-weak-ubgi.exe",
+                "algorithm": "minimax",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 24
+    },
+    {
+        "timestamp": "2026-06-20 17:29:51",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minimax-weak-ubgi.exe",
+                "algorithm": "minimax",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 26
+    },
+    {
+        "timestamp": "2026-06-20 17:31:45",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minimax-strong-ubgi.exe",
+                "algorithm": "minimax",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 44
+    },
+    {
+        "timestamp": "2026-06-20 17:33:33",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minimax-strong-ubgi.exe",
+                "algorithm": "minimax",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 48
+    },
+    {
+        "timestamp": "2026-06-20 17:35:07",
+        "game_result": "White checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minimax-strong-ubgi.exe",
+                "algorithm": "minimax",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 37
+    },
+    {
+        "timestamp": "2026-06-20 17:36:28",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 46
+    },
+    {
+        "timestamp": "2026-06-20 17:37:52",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 46
+    },
+    {
+        "timestamp": "2026-06-20 17:39:14",
+        "game_result": "White wins",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 58
+    },
+    {
+        "timestamp": "2026-06-20 17:40:34",
+        "game_result": "White wins",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 58
+    },
+    {
+        "timestamp": "2026-06-20 17:42:20",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 54
+    },
+    {
+        "timestamp": "2026-06-20 17:46:52",
+        "game_result": "White checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 55
+    },
+    {
+        "timestamp": "2026-06-20 17:50:28",
+        "game_result": "White wins",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 88
+    },
+    {
+        "timestamp": "2026-06-20 17:52:32",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 60
+    },
+    {
+        "timestamp": "2026-06-20 18:04:09",
+        "game_result": "Black checkmate",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 46
+    },
+    {
+        "timestamp": "2026-06-20 18:05:55",
+        "game_result": "White wins",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 58
+    },
+    {
+        "timestamp": "2026-06-20 18:08:15",
+        "game_result": "Black wins",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 75
+    },
+    {
+        "timestamp": "2026-06-20 18:14:16",
+        "game_result": "Black checkmate",
+        "winner": "boss-ubgi.exe",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 48
+    },
+    {
+        "timestamp": "2026-06-20 18:15:54",
+        "game_result": "White checkmate",
+        "winner": "boss-ubgi.exe",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 51
+    },
+    {
+        "timestamp": "2026-06-20 18:17:29",
+        "game_result": "White checkmate",
+        "winner": "boss-ubgi.exe",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 51
+    },
+    {
+        "timestamp": "2026-06-20 18:18:43",
+        "game_result": "White checkmate",
+        "winner": "boss-ubgi.exe",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "alphabeta",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 51
     }
 ]

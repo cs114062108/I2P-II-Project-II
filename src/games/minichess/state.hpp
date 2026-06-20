@@ -75,6 +75,9 @@ public:
     std::string encode_board() const override;
     void decode_board(const std::string& s, int side_to_move) override;
 
+    // Rearrange and sort legal moves to prioritize promising branches (e.g., MVV-LVA)
+    std::vector<Move> order_moves(const std::vector<Move>& moves) const;
+
     /* === Game description === */
     int board_h() const override { return BOARD_H; }
     int board_w() const override { return BOARD_W; }

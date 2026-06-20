@@ -227,10 +227,17 @@ REQUIREMENTS.md
 
 # Temp files
 gamelog.txt
-*.png
+#*.png
 temp/
 wandb/
 lightning_logs/
 *.exe
-*.png
+#*.png
 REQUIREMENTS.md
+
+# Submission for Assignment
+reports/*.pdf
+submission/
+
+# Others/temp
+reports/gui_win_table.md
