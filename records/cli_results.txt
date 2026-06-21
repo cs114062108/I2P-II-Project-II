@@ -869,3 +869,189 @@ Game 2/2: Engine1(minimax)=Black vs Engine2(alphabeta)=White 1-0
   Engine2 minichess-ubgi (alphabeta) score: 2.0/2 (100.0%) ==>>> YEAH!! alphabeta beat strong for both black and white again!!
 ==================================================
 
+Game 1/2: Engine1(pvs)=White vs Engine2(minimax)=Black 1-0
+  Score after 1 game(s): Engine1(pvs) +1 -0 =0
+  Score after 1 game(s): Engine2(minimax) +0 -1 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(minimax)=White 0-1
+  Score after 2 game(s): Engine1(pvs) +2 -0 =0
+  Score after 2 game(s): Engine2(minimax) +0 -2 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +2 -0 =0
+  Engine2 minimax-strong-ubgi (minimax): +0 -2 =0
+  White wins: 1  Black wins: 1  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 2.0/2 (100.0%)
+  Engine2 minimax-strong-ubgi (minimax) score: 0.0/2 (0.0%)
+==================================================
+
+Game 1/2: Engine1(pvs)=White vs Engine2(minimax)=Black  [DEBUG] No bestmove found. stdout lines=2
+ 0-1
+  Score after 1 game(s): Engine1(pvs) +0 -1 =0
+  Score after 1 game(s): Engine2(minimax) +1 -0 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(minimax)=White  [DEBUG] No bestmove found. stdout lines=2
+ 1-0
+  Score after 2 game(s): Engine1(pvs) +0 -2 =0
+  Score after 2 game(s): Engine2(minimax) +2 -0 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +0 -2 =0
+  Engine2 minimax-strong-ubgi (minimax): +2 -0 =0
+  White wins: 1  Black wins: 1  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 0.0/2 (0.0%)
+  Engine2 minimax-strong-ubgi (minimax) score: 2.0/2 (100.0%)
+==================================================
+
+Game 1/2: Engine1(pvs)=White vs Engine2(minimax)=Black 1-0
+  Score after 1 game(s): Engine1(pvs) +1 -0 =0
+  Score after 1 game(s): Engine2(minimax) +0 -1 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(minimax)=White 0-1
+  Score after 2 game(s): Engine1(pvs) +2 -0 =0
+  Score after 2 game(s): Engine2(minimax) +0 -2 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +2 -0 =0
+  Engine2 minimax-strong-ubgi (minimax): +0 -2 =0
+  White wins: 1  Black wins: 1  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 2.0/2 (100.0%)
+  Engine2 minimax-strong-ubgi (minimax) score: 0.0/2 (0.0%)
+==================================================
+
+--- ======== After PVS applied 2MB TT ========= ---
+Game 1/2: Engine1(pvs)=White vs Engine2(pvs)=Black  [DEBUG] No bestmove found. stdout lines=24
+ 1-0
+  Score after 1 game(s): Engine1(pvs) +1 -0 =0
+  Score after 1 game(s): Engine2(pvs) +0 -1 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(pvs)=White 1-0
+  Score after 2 game(s): Engine1(pvs) +1 -1 =0
+  Score after 2 game(s): Engine2(pvs) +1 -1 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +1 -1 =0
+  Engine2 minichess-ubgi (pvs): +1 -1 =0
+  White wins: 2  Black wins: 0  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 1.0/2 (50.0%)
+  Engine2 minichess-ubgi (pvs) score: 1.0/2 (50.0%)
+==================================================
+
+Game 1/2: Engine1(pvs)=White vs Engine2(pvs)=Black  [DEBUG] No bestmove found. stdout lines=24
+ 1-0
+  Score after 1 game(s): Engine1(pvs) +1 -0 =0
+  Score after 1 game(s): Engine2(pvs) +0 -1 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(pvs)=White 1-0
+  Score after 2 game(s): Engine1(pvs) +1 -1 =0
+  Score after 2 game(s): Engine2(pvs) +1 -1 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +1 -1 =0
+  Engine2 minichess-ubgi (pvs): +1 -1 =0
+  White wins: 2  Black wins: 0  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 1.0/2 (50.0%)
+  Engine2 minichess-ubgi (pvs) score: 1.0/2 (50.0%)
+==================================================
+
+Game 1/2: Engine1(pvs)=White vs Engine2(alphabeta)=Black 1-0
+  Score after 1 game(s): Engine1(pvs) +1 -0 =0
+  Score after 1 game(s): Engine2(alphabeta) +0 -1 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(alphabeta)=White 1-0
+  Score after 2 game(s): Engine1(pvs) +1 -1 =0
+  Score after 2 game(s): Engine2(alphabeta) +1 -1 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +1 -1 =0
+  Engine2 minichess-ubgi (alphabeta): +1 -1 =0
+  White wins: 2  Black wins: 0  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 1.0/2 (50.0%)
+  Engine2 minichess-ubgi (alphabeta) score: 1.0/2 (50.0%)
+==================================================
+
+Game 1/2: Engine1(pvs)=White vs Engine2(pvs)=Black  [DEBUG] No bestmove found. stdout lines=34
+ 1-0
+  Score after 1 game(s): Engine1(pvs) +1 -0 =0
+  Score after 1 game(s): Engine2(pvs) +0 -1 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(pvs)=White 1-0
+  Score after 2 game(s): Engine1(pvs) +1 -1 =0
+  Score after 2 game(s): Engine2(pvs) +1 -1 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +1 -1 =0
+  Engine2 minichess-ubgi (pvs): +1 -1 =0
+  White wins: 2  Black wins: 0  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 1.0/2 (50.0%)
+  Engine2 minichess-ubgi (pvs) score: 1.0/2 (50.0%)
+==================================================
+
+--depth 7
+Game 1/2: Engine1(pvs)=White vs Engine2(pvs)=Black 0-1
+  Score after 1 game(s): Engine1(pvs) +0 -1 =0
+  Score after 1 game(s): Engine2(pvs) +1 -0 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(pvs)=White 0-1
+  Score after 2 game(s): Engine1(pvs) +1 -1 =0
+  Score after 2 game(s): Engine2(pvs) +1 -1 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +1 -1 =0
+  Engine2 minichess-ubgi (pvs): +1 -1 =0
+  White wins: 0  Black wins: 2  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 1.0/2 (50.0%)
+  Engine2 minichess-ubgi (pvs) score: 1.0/2 (50.0%)
+==================================================
+
+--depth 8
+Game 1/2: Engine1(pvs)=White vs Engine2(pvs)=Black 1-0
+  Score after 1 game(s): Engine1(pvs) +1 -0 =0
+  Score after 1 game(s): Engine2(pvs) +0 -1 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(pvs)=White 0-1
+  Score after 2 game(s): Engine1(pvs) +2 -0 =0
+  Score after 2 game(s): Engine2(pvs) +0 -2 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +2 -0 =0
+  Engine2 minichess-ubgi (pvs): +0 -2 =0
+  White wins: 1  Black wins: 1  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 2.0/2 (100.0%)
+  Engine2 minichess-ubgi (pvs) score: 0.0/2 (0.0%)
+==================================================
+
+--depth 7
+Game 1/2: Engine1(pvs)=White vs Engine2(pvs)=Black 0-1
+  Score after 1 game(s): Engine1(pvs) +0 -1 =0
+  Score after 1 game(s): Engine2(pvs) +1 -0 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(pvs)=White 0-1
+  Score after 2 game(s): Engine1(pvs) +1 -1 =0
+  Score after 2 game(s): Engine2(pvs) +1 -1 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +1 -1 =0
+  Engine2 minichess-ubgi (pvs): +1 -1 =0
+  White wins: 0  Black wins: 2  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 1.0/2 (50.0%)
+  Engine2 minichess-ubgi (pvs) score: 1.0/2 (50.0%)
+==================================================
+
+Game 1/2: Engine1(pvs)=White vs Engine2(pvs)=Black  [DEBUG] No bestmove found. stdout lines=34
+ 1-0
+  Score after 1 game(s): Engine1(pvs) +1 -0 =0
+  Score after 1 game(s): Engine2(pvs) +0 -1 =0
+Game 2/2: Engine1(pvs)=Black vs Engine2(pvs)=White 1-0
+  Score after 2 game(s): Engine1(pvs) +1 -1 =0
+  Score after 2 game(s): Engine2(pvs) +1 -1 =0
+==================================================
+  Tournament Results (2 games)
+==================================================
+  Engine1 boss-ubgi (pvs): +1 -1 =0
+  Engine2 minichess-ubgi (pvs): +1 -1 =0
+  White wins: 2  Black wins: 0  Draws: 0
+  Engine1 boss-ubgi (pvs) score: 1.0/2 (50.0%)
+  Engine2 minichess-ubgi (pvs) score: 1.0/2 (50.0%)
+==================================================
+

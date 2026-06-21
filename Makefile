@@ -6,6 +6,7 @@ UNITTEST_DIR = unittest
 BUILD_DIR = build
 
 STATE_SOURCE = $(SOURCES_DIR)/games/minichess/state.cpp
+TT_SOURCE = $(SOURCES_DIR)/games/minichess/tt.cpp
 POLICY_SRC = $(wildcard $(SOURCES_DIR)/policy/*.cpp)
 UNITTESTS = $(wildcard $(UNITTEST_DIR)/*.cpp)
 TARGET_UNITTEST = $(UNITTESTS:$(UNITTEST_DIR)/%_test.cpp=%)
@@ -23,7 +24,7 @@ $(UNITTEST_DIR)/build:
 	mkdir -p $(UNITTEST_DIR)/build
 
 minichess: | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(MINICHESS_INC) -o $(BUILD_DIR)/minichess-ubgi $(STATE_SOURCE) $(POLICY_SRC) src/ubgi/ubgi.cpp
+	$(CXX) $(CXXFLAGS) $(MINICHESS_INC) -o $(BUILD_DIR)/minichess-ubgi $(STATE_SOURCE) $(TT_SOURCE) $(POLICY_SRC) src/ubgi/ubgi.cpp
 
 benchmark: | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) $(MINICHESS_INC) -o $(BUILD_DIR)/minichess-benchmark $(STATE_SOURCE) $(POLICY_SRC) src/benchmark.cpp

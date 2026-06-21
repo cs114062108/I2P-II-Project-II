@@ -731,5 +731,45 @@
             }
         },
         "moves_count": 51
+    },
+    {
+        "timestamp": "2026-06-21 15:30:03",
+        "game_result": "draw",
+        "winner": "boss-ubgi.exe",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 67
+    },
+    {
+        "timestamp": "2026-06-21 15:31:46",
+        "game_result": "White wins",
+        "winner": "boss-ubgi.exe",
+        "players": {
+            "white": {
+                "type": "AI",
+                "name": "boss-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            },
+            "black": {
+                "type": "AI",
+                "name": "minichess-ubgi.exe",
+                "algorithm": "pvs",
+                "depth": "0 (Use time limit)"
+            }
+        },
+        "moves_count": 44
     }
 ]
